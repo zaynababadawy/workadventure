@@ -21,6 +21,7 @@ import { adminApi } from "./services/AdminApi";
 import { jwtTokenManager } from "./services/JWTTokenManager";
 import { CompanionService } from "./services/CompanionService";
 import { WokaService } from "./services/WokaService";
+import { MatrixClient } from "./services/matrix/MatrixClient";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const LiveDirectory = require("live-directory");
 
@@ -99,6 +100,9 @@ class App {
         const wokaListController = new WokaListController(this.webserver, jwtTokenManager);
 
         try {
+            // Test matrix client
+            new MatrixClient("@test:mydomaine.com", "mysecret_access_token_from_matrix", "https://mydomaine.com");
+
             const capabilities = await adminApi.initialise();
             companionListController.setCompanionService(CompanionService.get(capabilities));
             wokaListController.setWokaService(WokaService.get(capabilities));
